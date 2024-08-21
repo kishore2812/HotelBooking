@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Hotel Room Details</title>
+    <style>
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            color: #333; 
+            background: #f9f9f9;
+        }
+        header { 
+            background: linear-gradient(135deg, #FF5A5F, #FF9A8B); 
+            color: #fff; 
+            padding: 30px; 
+            text-align: center; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        header h1 { 
+            margin: 0; 
+            font-size: 2.5em; 
+        }
+        header p { 
+            margin: 5px 0 0; 
+            font-size: 1.2em; 
+        }
+        main { 
+            padding: 20px; 
+            max-width: 1200px; 
+            margin: auto; 
+        }
+        .carousel-container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            position: relative; 
+        }
+        .main-image { 
+            width: 100%; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .thumbnail-container { 
+            display: flex; 
+            justify-content: center; 
+            margin-top: 10px; 
+        }
+        .thumbnail-container img { 
+            width: 80px; 
+            height: 80px; 
+            border-radius: 8px; 
+            margin: 0 5px; 
+            cursor: pointer; 
+            opacity: 0.6; 
+            transition: opacity 0.3s ease, border 0.3s ease; 
+        }
+        .thumbnail-container img.active { 
+            opacity: 1; 
+            border: 3px solid #FF5A5F; 
+        }
+        .room-details, .booking-form { 
+            background: #fff; 
+            border-radius: 8px; 
+            padding: 20px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+            margin-bottom: 20px;
+        }
+        .room-details h2, .booking-form h3 { 
+            margin-top: 0; 
+            color: #FF5A5F; 
+        }
+        .room-details ul { 
+            list-style: none; 
+            padding: 0; 
+        }
+        .room-details li { 
+            background: #f2f2f2; 
+            margin: 5px 0; 
+            padding: 10px; 
+            border-radius: 4px;
+        }
+        .booking-form label { 
+            display: block; 
+            margin-top: 10px; 
+            font-weight: bold; 
+        }
+        .booking-form input { 
+            width: calc(100% - 22px); 
+            padding: 12px; 
+            margin-top: 5px; 
+            border: 1px solid #ddd; 
+            border-radius: 6px; 
+            box-sizing: border-box; 
+            background-color: #fff; 
+            font-size: 1em; 
+            transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+        }
+        .booking-form input:focus { 
+            border-color: #FF5A5F; 
+            box-shadow: 0 0 8px rgba(255, 90, 95, 0.2); 
+            outline: none; 
+        }
+        .booking-form button { 
+            background: #FF5A5F; 
+            color: #fff; 
+            border: none; 
+            padding: 15px; 
+            margin-top: 10px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 1em; 
+            transition: background 0.3s ease; 
+        }
+        .booking-form button:hover { 
+            background: #FF9A8B; 
+        }
+        footer { 
+            background: linear-gradient(135deg, #FF5A5F, #FF9A8B); 
+            color: #fff; 
+            text-align: center; 
+            padding: 15px 20px; 
+            box-shadow: 0 -4px 8px rgba(0,0,0,0.2);
+        }
+        .text_title {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .content {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .sub_content {
+            text-align: left;
+            padding-left: 20%;
+            padding-top: 10px;
+            padding-right: 20%;
+            margin-bottom: 20px;
+        }
+        .fa-bed{
+            margin-left: 100px;
+        }
+        .fa-bath{
+            margin-left: 100px;
+        }
+        .fa-wifi{
+            margin-left: 150px;
+        }
+        .fa-utensils{
+            margin-left: 125px;
+        }
+        .fa-parking{
+            margin-left: 90px;
+        }
+        .fa-snowflake{
+            margin-left: 65px;
+        }
+        /* Styling for the location section */
+.location {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f1f1f1; /* Light background color for the section */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Subtle shadow for depth */
+}
+
+.location h2 {
+    color: #FF5A5F; /* Matching header color */
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+#location-link {
+    display: inline-block;
+    transition: transform 0.3s ease; /* Smooth scaling on hover */
+}
+
+#location-link:hover {
+    transform: scale(1.05); /* Slightly enlarge the image on hover */
+}
+
+#location-icon {
+    width: 200px; /* Size of the location icon */
+    height: auto; /* Maintain aspect ratio */
+    
+    border: 2px solid #FF5A5F; /* Border color matching the theme */
+}
+.form-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    padding: 20px;
+    max-width: 400px; /* Adjust the width as needed */
+    margin: 20px auto;
+    text-align: center;
+}
+
+.form-card h2 {
+    color: #FF5A5F;
+    margin: 0 0 20px;
+    font-size: 1.5em;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+button {
+    background: #FF5A5F;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #FF9A8B;
+}
+
+#payment-message {
+    margin-top: 20px;
+    color: #FF5A5F;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Luxury Suite in Dubai</h1>
+        <p>Entire home hosted by John Doe</p>
+    </header>
+    <div class="text_title">
+        <h1>HomeStar - In The Heart Of Jumeirah Beach !</h1>
+    </div>
+    <main>
+        <!-- Image carousel -->
+        <div class="carousel-container">
+            <img src="https://a0.muscache.com/im/pictures/miso/Hosting-623066413361958153/original/bb56fd1a-c8e5-4054-a89d-68eb1c0c5f8e.jpeg?im_w=960" alt="Room View" class="main-image" id="main-image">
+            <div class="thumbnail-container">
+                <img src="https://a0.muscache.com/im/pictures/miso/Hosting-623066413361958153/original/bb56fd1a-c8e5-4054-a89d-68eb1c0c5f8e.jpeg?im_w=960" alt="Room View" class="thumbnail active">
+                <img src="https://a0.muscache.com/im/pictures/miso/Hosting-623066413361958153/original/43b6dcdb-392e-4871-a0d7-2c304c598e44.jpeg?im_w=720" alt="Bathroom View" class="thumbnail">
+                <img src="https://a0.muscache.com/im/pictures/miso/Hosting-623066413361958153/original/3df1ed43-7e72-4072-94c2-796d582cb189.png?im_w=720" alt="Balcony View" class="thumbnail">
+                <img src="https://a0.muscache.com/im/pictures/miso/Hosting-623066413361958153/original/3df1ed43-7e72-4072-94c2-796d582cb189.png?im_w=720" alt="Balcony View" class="thumbnail">
+                <img src="https://a0.muscache.com/im/pictures/miso/Hosting-623066413361958153/original/ea4a7908-2e05-4335-83b0-2451d6d0d513.jpeg?im_w=720" alt="Balcony View" class="thumbnail">
+            </div>
+        </div>
+        <div class="content">
+            <h2>About this space</h2>
+            <div class="sub_content">
+                <p>If you're looking for the best location in Dubai at the best rates, then drop off your bags and relax in Homestar; a place ideal for backpackers & solo travelers due to its genuine social atmosphere and backpacker vibe.</p>
+                <p>Located at 5min from the beach and the Marina!</p>
+                <p>Homestar offers the perfect positioning to enjoy both the relaxing beach as well as the buzzing "The Walk" with its clubs, restaurants, and many more!</p>
+                <p>Breakfast and activities available.</p>
+                <p>Close access to the Tram!</p>
+            </div>
+        </div>
+        <section class="room-details">
+            <h2>Stay in the heart of Dubai</h2>
+            <p>This luxurious studio is perfectly located in downtown Dubai, close to major attractions and transport links. Ideal for both leisure and business travelers.</p>
+            <ul class="amenities">
+                <li>1 bedroom <i class="fas fa-bed"></i></li>
+                <li>1 bathroom<i class="fas fa-bath"></i></li>
+                <li>Wifi<i class="fas fa-wifi"></i> </li>
+                <li>Kitchen<i class="fas fa-utensils"></i></li>
+                <li>Free parking<i class="fas fa-parking"></i></li>
+                <li>Air conditioning<i class="fas fa-snowflake"></i> </li>
+            </ul>
+        </section>
+        <section class="booking-form">
+            <h3>Start Booking</h3>
+            <form id="payment-form" class="form-card">
+                <h2>Booking Details</h2>
+                <div class="form-group">
+                    <label for="checkin-date">Check-in</label>
+                    <input type="date" id="checkin-date" name="checkin">
+                </div>
+                <div class="form-group">
+                    <label for="checkout-date">Check-out</label>
+                    <input type="date" id="checkout-date" name="checkout">
+                </div>
+                <div class="form-group">
+                    <label for="guests">Guests</label>
+                    <input type="number" id="guests" name="guests" min="1" max="4">
+                </div>
+                <button type="submit">Check Availability</button>
+                <p id="payment-message"></p>
+            </form>
+        </section>
+        <section class="location">
+            <h2>Find Us Here</h2>
+            <a href="https://www.google.com/maps?q=YOUR_LOCATION" target="_blank" id="location-link">
+                <img src="data:image/jpeg;base64,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" alt="Location Icon" id="location-icon">
+            </a>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Hotel Booking. All rights reserved.</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainImage = document.getElementById('main-image');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', () => {
+                    document.querySelector('.thumbnail.active').classList.remove('active');
+                    thumbnail.classList.add('active');
+                    mainImage.src = thumbnail.src;
+                    mainImage.alt = thumbnail.alt;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
